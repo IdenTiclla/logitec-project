@@ -1,0 +1,48 @@
+{% extends 'layout.html' %} {% block title %} Contratos {% endblock %} {% block
+    content %}
+    <h1>Contratos</h1>
+    <div class="row">
+      <div class="col-md-5">
+        <form action="/contratos" method="post">
+          
+    
+          <div class="form-group">
+            <label for="descripcion">Descripcion del contrato</label>
+            <input
+              type="text"
+              class="form-control"
+              id="descripcion"
+              name="descripcion"
+              placeholder="Ingrese el descripcion de la contrato"
+            />
+          </div>
+    
+          <button type="submit">Registrar Sucursal</button>
+        </form>
+      </div>
+      <div class="col-md-7">
+        {% if contratos|length > 0 %}
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Descripcion</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for contrato in contratos %}
+                  <tr>
+                      <th scope="row">{{contrato.id}}</th>
+                      <td>{{contrato.descripcion}}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+        {% else%}
+            <h1>no hay contratos registrados!</h1>
+        {% endif %}
+        
+      </div>
+    </div>
+    {% endblock %}
+    

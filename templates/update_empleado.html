@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Actualizar Empleado
+{% endblock %}
+
+{% block content %}
+<div class="col-md-5">
+    <form action="/empleados/update/{{empleado.id}}" method="post">
+
+      <div class="form-group">
+        <label for="nombre">Nombre del empleado</label>
+        <input
+          type="text"
+          class="form-control"
+          id="nombre"
+          name="nombre"
+          placeholder="Ingrese el nombre del producto"
+          value="{{empleado.nombre}}"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="sueldo">Ingrese el sueldo</label>
+        <input
+          type="number"
+          class="form-control"
+          id="sueldo"
+          name="sueldo"
+          rows="3"
+          placeholder="Ingrese el sueldo del producto"
+          min="1"
+          value="{{empleado.sueldo}}"
+        />
+      
+      <button type="submit">Actualizar Empleado</button>
+    </form>
+  </div>
+
+{% endblock %}

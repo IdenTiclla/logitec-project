@@ -1,0 +1,103 @@
+{% extends 'layout.html' %} {% block title %} Products {% endblock %} {% block
+content %}
+<h1>Products</h1>
+<div class="row">
+  <div class="col-md-5">
+    <form action="/productos" method="post">
+      <div class="form-group">
+        <label for="codigo">Codigo producto</label>
+        <input
+          type="text"
+          class="form-control"
+          id="codigo"
+          name="codigo"
+          placeholder="Ingrese el codigo del producto"
+          maxlength="5"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="nombre">Nombre del producto</label>
+        <input
+          type="text"
+          class="form-control"
+          id="nombre"
+          name="nombre"
+          placeholder="Ingrese el nombre del producto"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="descripcion">Descripcion</label>
+        <textarea
+          class="form-control"
+          id="descripcion"
+          name="descripcion"
+          rows="3"
+          placeholder="Ingrese la descripcion del producto"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="stock">Ingrese el stock del producto</label>
+        <input
+          type="number"
+          class="form-control"
+          id="stock"
+          name="stock"
+          placeholder="Ingrese el stock del producto"
+          min="1"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="precio">Ingrese el precio del producto</label>
+        <input
+          type="number"
+          class="form-control"
+          id="precio"
+          name="precio"
+          placeholder="Ingrese el precio del producto"
+          min="1"
+        />
+      </div>
+
+      <button type="submit">Registrar producto</button>
+    </form>
+  </div>
+  <div class="col-md-7">
+    {% if products|length > 0 %}
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Codigo</th>
+                <th scope="col">Nombre de producto</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Stock disponible</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for product in products %}
+              <tr>
+                  <th scope="row">{{product.codigo}}</th>
+                  <td>{{product.nombre}}</td>
+                  <td>{{product.descripcion}}</td>
+                  <td>{{product.stock}}</td>
+                  <td>{{product.precio}} Bs</td>
+                  <td>
+                    <a href="/productos/update/{{product.codigo}}" class="btn btn-success">Actualizar</a>
+                    <a href="/productos/delete/{{product.codigo}}" class="btn btn-danger confirmation">Eliminar</a>
+                  </td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    {% else%}
+        <h1>no hay productos registrados!</h1>
+    {% endif %}
+    
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% include 'layout.html' %}
+
+
+
+{% block content %}
+    <h1>Ventas</h1>
+    {% if productos|length > 0 %}
+        <div class="row">
+            <div class="col-md-5">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Nombre de producto</th>
+                        <th scope="col">Stock disponible</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Acciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for producto in productos %}
+                      <tr>
+                          <td data-nombre="{{producto.nombre}}">{{producto.nombre}}</td>
+                          <td data-stock="{{producto.stock}}">{{producto.stock}}</td>
+                          <td data-precio="{{producto.precio}}">{{producto.precio}} Bs</td>
+                          <td>
+                            <a href="ventas/addToCart/{{producto.id}}" class="btn btn-success" id="addCartBtn">Agregar al carrito</a>
+                          </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-7">
+             <!-- carrito -->
+                {% if cart %}
+                    <a href="/ventas/limpiar" class="btn btn-danger">Limpiar carrito</a>
+                    <section class="h-100" style="background-color: #eee;">
+                    <div class="container h-100 py-5">
+                    <div class="row d-flex justify-content-center align-items-center h-100">
+                        <div class="col-10">
+                
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h3 class="fw-normal mb-0 text-black">Carrito de compras</h3>
+                        </div>
+                        {% for item in cart %}
+                            {{item}}
+                        <div class="card rounded-3 mb-4">
+                            <div class="card-body p-4">
+                            <div class="row d-flex justify-content-between align-items-center">
+                                <div class="col-md-3 col-lg-3 col-xl-3">
+                                <p class="lead fw-normal mb-2">{{item.nombre}}</p>
+                                </div>
+                                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                <button class="btn btn-link px-2"
+                                    onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                
+                                <input disabled id="form1" min="0" name="quantity" value="{{item.cantidad}}" type="number"
+                                    class="form-control form-control-sm" />
+                
+                                <button class="btn btn-link px-2"
+                                    onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                </div>
+                                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                <h5 class="mb-0">{{item.precio}} Bs</h5>
+                                </div>
+                                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                <a href="#!" class="text-danger"><i class="fas fa-trash fa-lg"></i></a>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        
+                        <!-- para prueba -->
+                        {% for empleado in empleados %}
+                        empleado productos vendidos: {{empleado.products}}
+                        
+                        {% endfor %}
+                        <div class="card-body">
+                            <form action="/ventas/add" method="post">
+                                <div class="form-group">
+                                    <label for="sueldo">Seleccione el empleado que realiza la venta</label>
+                                    <select name="empleadoId" class="form-select" aria-label="Default select example">
+                                        {% for empleado in empleados %}
+                                        
+                                        <option value="{{empleado.id}}">{{empleado.nombre}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-warning btn-block btn-lg">Registrar venta</button>
+                                Precio total: <strong>{{precio_total}} Bs</strong>
+                                </form>
+                            </div>
+                        </div>
+                
+                        </div>
+                    </div>
+                    </div>
+                    </section>
+                {% else %}
+                    <h1>Agrega productos al carrito!</h1>
+                {% endif %}
+            </div>
+
+
+
+    
+ 
+        </div>
+
+    {% else%}
+        <h1>No hay productos en stock!</h1>
+    {% endif %}
+{% endblock %}
